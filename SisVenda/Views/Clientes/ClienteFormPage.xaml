@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SisVenda.ClienteFormPage"
+             Title="Cadastro Cliente">
+    <ScrollView>
+        <VerticalStackLayout Padding="12" Spacing="8">
+            <Entry x:Name="nomeEntry" Placeholder="Nome *" />
+            <Entry x:Name="cnpjEntry" Placeholder="CNPJ" />
+            <Entry x:Name="cpfEntry" Placeholder="CPF" />
+            <Entry x:Name="rgEntry" Placeholder="RG" />
+            <Entry x:Name="telefoneEntry" Placeholder="Telefone" Keyboard="Telephone" />
+            <Entry x:Name="celularEntry" Placeholder="Celular" Keyboard="Telephone" />
+            <Entry x:Name="emailEntry" Placeholder="Email *" Keyboard="Email" />
+            <Entry x:Name="enderecoEntry" Placeholder="Endereço" />
+            <Entry x:Name="numeroEntry" Placeholder="Número" Keyboard="Numeric" />
+            <Entry x:Name="complementoEntry" Placeholder="Complemento" />
+            <Entry x:Name="bairroEntry" Placeholder="Bairro" />
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <VerticalStackLayout Grid.Column="0">
+                    <Picker x:Name="estadoPicker" Title="Estado" SelectedIndexChanged="EstadoPicker_SelectedIndexChanged" HorizontalOptions="FillAndExpand" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1">
+                    <Picker x:Name="cidadePicker" Title="Cidade" HorizontalOptions="FillAndExpand" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <Entry x:Name="cepEntry" Placeholder="CEP" Keyboard="Numeric" />
+
+            <HorizontalStackLayout Spacing="10">
+                <Button Text="Salvar" Clicked="Salvar_Clicked" />
+                <Button Text="Cancelar" Clicked="Cancelar_Clicked" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

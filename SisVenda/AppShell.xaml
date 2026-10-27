@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="SisVenda.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:SisVenda"
+    Title="SisVenda">
+
+    <TabBar>
+        <ShellContent
+            Title="Clientes"
+            ContentTemplate="{DataTemplate local:ClientePage}"
+            Route="ClientePage" />
+
+        <ShellContent
+            Title="Produtos"
+            ContentTemplate="{DataTemplate local:ProdutoPage}"
+            Route="ProdutoPage" />
+    </TabBar>
+
+</Shell>

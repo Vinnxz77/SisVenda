@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SisVenda.ProdutoPage"
+             Title="Produtos">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Novo" Clicked="ToolbarItem_Novo_Clicked" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="12">
+            <Label Text="Produtos" FontSize="20" FontAttributes="Bold" />
+
+            <CollectionView x:Name="produtosCollectionView" ItemsSource="{Binding}" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="8" Margin="0,6" BorderColor="#DDD" CornerRadius="6">
+                            <Grid ColumnDefinitions="2*,1.2*,1*,2.5*,Auto,Auto" ColumnSpacing="8">
+                                <Label Grid.Column="0" Text="{Binding Nome}" FontAttributes="Bold" VerticalOptions="Center" />
+                                <Label Grid.Column="1" Text="{Binding PrecoFormatado}" VerticalOptions="Center" />
+                                <Label Grid.Column="2" Text="{Binding Quantidade}" VerticalOptions="Center" />
+                                <Label Grid.Column="3" Text="{Binding Descricao}" VerticalOptions="Center" LineBreakMode="TailTruncation" MaxLines="1" />
+
+                                <Button Grid.Column="4" Text="Editar" Clicked="Editar_Clicked" CommandParameter="{Binding Id}" Margin="4,0" WidthRequest="80" />
+                                <Button Grid.Column="5" Text="Excluir" BackgroundColor="#FF6666" Clicked="Excluir_Clicked" CommandParameter="{Binding Id}" Margin="4,0" WidthRequest="80" />
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

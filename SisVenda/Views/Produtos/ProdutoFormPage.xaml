@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SisVenda.ProdutoFormPage"
+             Title="Cadastro Produto">
+    <ScrollView>
+        <VerticalStackLayout Padding="12" Spacing="8">
+            <Entry x:Name="nomeEntry" Placeholder="Nome *" />
+            <Entry x:Name="precoEntry" Placeholder="Preço *" Keyboard="Numeric" />
+            <Editor x:Name="descricaoEditor" Placeholder="Descrição" AutoSize="TextChanges" HeightRequest="100" />
+            <Entry x:Name="quantidadeEntry" Placeholder="Quantidade *" Keyboard="Numeric" />
+
+            <HorizontalStackLayout Spacing="10">
+                <Button Text="Salvar" Clicked="Salvar_Clicked" />
+                <Button Text="Cancelar" Clicked="Cancelar_Clicked" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
