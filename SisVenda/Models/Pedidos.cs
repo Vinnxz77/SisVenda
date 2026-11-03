@@ -9,7 +9,7 @@ namespace SisVenda.Models
         public string? Observacao { get; set; }
         public List<ItemPedido> Itens { get; set; } = new List<ItemPedido>();
         public decimal Total => Itens.Sum(item => item.Total);
-        public string ClienteNome => Cliente?.Nome ?? string.Empty;
+        public string ClienteNome => Cliente?.Nome ?? "Cliente não informado";
         public string TotalFormatado => Total.ToString("C2", System.Globalization.CultureInfo.CurrentCulture);
     }
     public class ItemPedido

@@ -82,6 +82,18 @@ public partial class PedidoFormPage : ContentPage
             return;
         }
 
+        var quantidadeNoPedido = itens
+            .Where(item => item.Produto?.Id == produto.Id)
+            .Sum(item => item.Quantidade);
+        if (quantidadeNoPedido + quantidade > produto.Quantidade)
+        {
+            await DisplayAlertAsync(
+                "Estoque insuficiente",
+                $"A quantidade solicitada ({quantidadeNoPedido + quantidade}) é maior que o estoque disponível de {produto.Quantidade} unidade(s).",
+                "OK");
+            return;
+        }
+
         itens.Add(new ItemPedido
         {
             Id = itens.Count == 0 ? 1 : itens.Max(item => item.Id) + 1,
@@ -106,16 +118,26 @@ public partial class PedidoFormPage : ContentPage
 
     private async void Salvar_Clicked(object? sender, EventArgs e)
     {
-        if (clientePicker.SelectedItem is not Cliente cliente)
-        {
-            await DisplayAlertAsync("Validação", "Selecione um cliente.", "OK");
-            return;
-        }
+        var cliente = clientePicker.SelectedItem as Cliente;
 
         if (itens.Count == 0)
         {
             await DisplayAlertAsync("Validação", "Inclua pelo menos um item no pedido.", "OK");
             return;
+        }
+
+        foreach (var grupo in itens.Where(item => item.Produto is not null).GroupBy(item => item.Produto!.Id))
+        {
+            var produto = grupo.First().Produto!;
+            var quantidadeSolicitada = grupo.Sum(item => item.Quantidade);
+            if (quantidadeSolicitada > produto.Quantidade)
+            {
+                await DisplayAlertAsync(
+                    "Estoque insuficiente",
+                    $"A quantidade solicitada de {produto.Nome} ({quantidadeSolicitada}) é maior que o estoque disponível de {produto.Quantidade} unidade(s).",
+                    "OK");
+                return;
+            }
         }
 
         if (orderId > 0)

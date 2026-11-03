@@ -19,7 +19,7 @@
 
             <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                 <VerticalStackLayout Grid.Column="0">
-                    <Picker x:Name="estadoPicker" Title="Estado" SelectedIndexChanged="EstadoPicker_SelectedIndexChanged" />
+                    <Picker x:Name="estadoPicker" Title="Estado" ItemDisplayBinding="{Binding Exibicao}" SelectedIndexChanged="EstadoPicker_SelectedIndexChanged" />
                 </VerticalStackLayout>
                 <VerticalStackLayout Grid.Column="1">
                     <Picker x:Name="cidadePicker" Title="Cidade" />

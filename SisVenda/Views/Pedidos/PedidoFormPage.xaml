@@ -5,8 +5,8 @@
              Title="Cadastro de Pedido">
     <ScrollView>
         <VerticalStackLayout Padding="12" Spacing="10">
-            <Label Text="Cliente *" FontAttributes="Bold" />
-            <Picker x:Name="clientePicker" Title="Selecione o cliente" ItemDisplayBinding="{Binding Nome}" />
+            <Label Text="Cliente (opcional)" FontAttributes="Bold" />
+            <Picker x:Name="clientePicker" Title="Selecione o cliente (opcional)" ItemDisplayBinding="{Binding Nome}" />
             <DatePicker x:Name="dataPicker" Format="dd/MM/yyyy" />
 
             <BoxView HeightRequest="1" Color="#DDDDDD" />

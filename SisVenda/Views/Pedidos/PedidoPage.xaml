@@ -14,9 +14,6 @@
         <CollectionView.ItemTemplate>
             <DataTemplate>
                 <Border Padding="10" Margin="0,0,0,8" Stroke="#DDDDDD">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="6" />
-                    </Border.StrokeShape>
                     <Grid ColumnDefinitions="*,*,*,Auto,Auto" ColumnSpacing="8">
                         <VerticalStackLayout Grid.Column="0">
                             <Label Text="{Binding ClienteNome}" FontAttributes="Bold" />

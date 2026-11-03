@@ -14,9 +14,6 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Border Padding="8" Margin="0,6" Stroke="#DDD">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="6" />
-                            </Border.StrokeShape>
                             <Grid ColumnDefinitions="auto,auto,auto,auto,auto,auto,Auto,Auto" ColumnSpacing="8" >
                                 <Label Grid.Column="0" Text="{Binding Nome}" FontAttributes="Bold" VerticalOptions="Center" />
                                 <Label Grid.Column="1" Text="{Binding CpfCnpj}" VerticalOptions="Center" />

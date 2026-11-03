@@ -16,9 +16,6 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Border Padding="8" Margin="0,6" Stroke="#DDD">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="6" />
-                            </Border.StrokeShape>
                             <Grid ColumnDefinitions="1.2*,2*,1.2*,1*,2.5*,Auto,Auto" ColumnSpacing="8">
                                 <Label Grid.Column="0" Text="{Binding Codigo}" VerticalOptions="Center" />
                                 <Label Grid.Column="1" Text="{Binding Nome}" FontAttributes="Bold" VerticalOptions="Center" />

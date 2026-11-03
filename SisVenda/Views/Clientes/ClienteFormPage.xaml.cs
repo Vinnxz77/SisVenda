@@ -1,6 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Text.Json;
 using Microsoft.Maui.Controls;
 using SisVenda.Models;
 using SisVenda.Services;
@@ -11,12 +10,8 @@ namespace SisVenda
     public partial class ClienteFormPage : ContentPage
     {
         int clientId = 0;
-        readonly Dictionary<string, List<string>> stateCities = new()
-        {
-            { "Estado Alpha", new List<string>{ "Alpha City 1","Alpha City 2","Alpha City 3", "Paracatu" } },
-            { "Estado Beta", new List<string>{ "Beta City 1","Beta City 2","Beta City 3" } },
-            { "Estado Gama", new List<string>{ "Gama City 1","Gama City 2","Gama City 3" } }
-        };
+        readonly List<EstadoBrasil> estados = new();
+        bool localidadesCarregadas;
 
         public string ClientId
         {
@@ -33,12 +28,12 @@ namespace SisVenda
         public ClienteFormPage()
         {
             InitializeComponent();
-            estadoPicker.ItemsSource = stateCities.Keys.ToList();
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
+            await CarregarLocalidadesAsync();
             if (clientId > 0)
             {
                 var c = ClienteRepository.GetById(clientId);
@@ -56,10 +51,10 @@ namespace SisVenda
         private void EstadoPicker_SelectedIndexChanged(object? sender, EventArgs e)
         {
             if (estadoPicker.SelectedIndex < 0) return;
-            var estado = estadoPicker.SelectedItem as string;
-            if (estado is null) return;
-            cidadePicker.ItemsSource = stateCities[estado];
-            cidadePicker.SelectedIndex = -1;
+            if (estadoPicker.SelectedItem is EstadoBrasil estado)
+                AtualizarCidades(estado);
+            else
+                cidadePicker.ItemsSource = null;
         }
 
         private async void Salvar_Clicked(object? sender, EventArgs e)
@@ -95,7 +90,7 @@ namespace SisVenda
                     c.Numero = numeroEntry.Text;
                     c.Complemento = complementoEntry.Text;
                     c.Bairro = bairroEntry.Text;
-                    c.Estado = estadoPicker.SelectedItem as string;
+                    c.Estado = (estadoPicker.SelectedItem as EstadoBrasil)?.Exibicao;
                     c.Cidade = cidadePicker.SelectedItem as string;
                     c.CEP = cepEntry.Text;
                 }
@@ -116,7 +111,7 @@ namespace SisVenda
                     Numero = numeroEntry.Text,
                     Complemento = complementoEntry.Text,
                     Bairro = bairroEntry.Text,
-                    Estado = estadoPicker.SelectedItem as string,
+                    Estado = (estadoPicker.SelectedItem as EstadoBrasil)?.Exibicao,
                     Cidade = cidadePicker.SelectedItem as string,
                     CEP = cepEntry.Text
                 };
@@ -145,10 +140,14 @@ namespace SisVenda
             numeroEntry.Text = c.Numero;
             complementoEntry.Text = c.Complemento;
             bairroEntry.Text = c.Bairro;
-            if (c.Estado != null && stateCities.ContainsKey(c.Estado))
+            var estado = estados.FirstOrDefault(item =>
+                string.Equals(item.Exibicao, c.Estado, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(item.Nome, c.Estado, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(item.Sigla, c.Estado, StringComparison.OrdinalIgnoreCase));
+            if (estado is not null)
             {
-                estadoPicker.SelectedItem = c.Estado;
-                cidadePicker.ItemsSource = stateCities[c.Estado];
+                estadoPicker.SelectedItem = estado;
+                AtualizarCidades(estado, c.Cidade);
                 cidadePicker.SelectedItem = c.Cidade;
             }
             else
@@ -175,6 +174,37 @@ namespace SisVenda
             estadoPicker.SelectedIndex = -1;
             cidadePicker.ItemsSource = null;
             cepEntry.Text = string.Empty;
+        }
+
+        private async Task CarregarLocalidadesAsync()
+        {
+            if (localidadesCarregadas)
+                return;
+
+            try
+            {
+                await using var stream = await FileSystem.OpenAppPackageFileAsync("estados-cidades.json");
+                var localidades = await JsonSerializer.DeserializeAsync<List<EstadoBrasil>>(
+                    stream,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                estados.Clear();
+                if (localidades is not null)
+                    estados.AddRange(localidades.OrderBy(item => item.Nome));
+
+                estadoPicker.ItemsSource = estados;
+                localidadesCarregadas = estados.Count > 0;
+            }
+            catch (Exception)
+            {
+                await DisplayAlertAsync("Erro", "Não foi possível carregar os estados e cidades.", "OK");
+            }
+        }
+
+        private void AtualizarCidades(EstadoBrasil estado, string? cidadeSelecionada = null)
+        {
+            cidadePicker.ItemsSource = estado.Cidades;
+            cidadePicker.SelectedItem = cidadeSelecionada;
         }
     }
 }

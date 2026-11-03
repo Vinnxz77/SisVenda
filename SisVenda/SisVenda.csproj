@@ -92,12 +92,6 @@
 	  <MauiXaml Update="Views\Produtos\ProdutoFormPage.xaml">
 		<Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Pedidos\PedidoPage.xaml">
-		<Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Pedidos\PedidoFormPage.xaml">
-		<Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
