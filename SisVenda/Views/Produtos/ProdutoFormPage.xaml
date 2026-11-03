@@ -5,6 +5,7 @@
              Title="Cadastro Produto">
     <ScrollView>
         <VerticalStackLayout Padding="12" Spacing="8">
+            <Entry x:Name="codigoEntry" Placeholder="Código *" />
             <Entry x:Name="nomeEntry" Placeholder="Nome *" />
             <Entry x:Name="precoEntry" Placeholder="Preço *" Keyboard="Numeric" />
             <Editor x:Name="descricaoEditor" Placeholder="Descrição" AutoSize="TextChanges" HeightRequest="100" />

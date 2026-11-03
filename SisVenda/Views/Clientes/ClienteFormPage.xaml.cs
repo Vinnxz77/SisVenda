@@ -53,7 +53,7 @@ namespace SisVenda
             }
         }
 
-        private void EstadoPicker_SelectedIndexChanged(object sender, EventArgs e)
+        private void EstadoPicker_SelectedIndexChanged(object? sender, EventArgs e)
         {
             if (estadoPicker.SelectedIndex < 0) return;
             var estado = estadoPicker.SelectedItem as string;
@@ -62,18 +62,20 @@ namespace SisVenda
             cidadePicker.SelectedIndex = -1;
         }
 
-        private async void Salvar_Clicked(object sender, EventArgs e)
+        private async void Salvar_Clicked(object? sender, EventArgs e)
         {
             var nome = nomeEntry.Text?.Trim();
             var email = emailEntry.Text?.Trim();
+            var cpf = cpfEntry.Text?.Trim();
+            var cnpj = cnpjEntry.Text?.Trim();
             if (string.IsNullOrWhiteSpace(nome))
             {
-                await DisplayAlert("Validação", "Nome é obrigatório.", "OK");
+                await DisplayAlertAsync("Validação", "Nome é obrigatório.", "OK");
                 return;
             }
-            if (string.IsNullOrWhiteSpace(email))
+            if (string.IsNullOrWhiteSpace(cpf) && string.IsNullOrWhiteSpace(cnpj))
             {
-                await DisplayAlert("Validação", "Email é obrigatório.", "OK");
+                await DisplayAlertAsync("Validação", "Informe o CPF ou o CNPJ do cliente.", "OK");
                 return;
             }
 
@@ -83,8 +85,8 @@ namespace SisVenda
                 if (c != null)
                 {
                     c.Nome = nome;
-                    c.CNPJ = cnpjEntry.Text;
-                    c.CPF = cpfEntry.Text;
+                    c.CNPJ = cnpj;
+                    c.CPF = cpf;
                     c.RG = rgEntry.Text;
                     c.Telefone = telefoneEntry.Text;
                     c.Celular = celularEntry.Text;
@@ -125,7 +127,7 @@ namespace SisVenda
             await Shell.Current.GoToAsync("..");
         }
 
-        private async void Cancelar_Clicked(object sender, EventArgs e)
+        private async void Cancelar_Clicked(object? sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("..");
         }

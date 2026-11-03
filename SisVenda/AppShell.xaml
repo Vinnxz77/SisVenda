@@ -16,6 +16,11 @@
             Title="Produtos"
             ContentTemplate="{DataTemplate local:ProdutoPage}"
             Route="ProdutoPage" />
+
+        <ShellContent
+            Title="Pedidos"
+            ContentTemplate="{DataTemplate local:PedidoPage}"
+            Route="PedidoPage" />
     </TabBar>
 
 </Shell>

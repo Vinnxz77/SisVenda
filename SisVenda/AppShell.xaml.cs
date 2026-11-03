@@ -10,6 +10,7 @@ namespace SisVenda
             // register routes
             Routing.RegisterRoute(nameof(ClienteFormPage), typeof(ClienteFormPage));
             Routing.RegisterRoute(nameof(ProdutoFormPage), typeof(ProdutoFormPage));
+            Routing.RegisterRoute(nameof(PedidoFormPage), typeof(PedidoFormPage));
         }
     }
 }

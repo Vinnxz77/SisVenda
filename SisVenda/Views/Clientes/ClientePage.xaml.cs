@@ -11,12 +11,12 @@ namespace SisVenda
             clientesCollectionView.ItemsSource = ClienteRepository.Clientes;
         }
 
-        private async void ToolbarItem_Novo_Clicked(object sender, EventArgs e)
+        private async void ToolbarItem_Novo_Clicked(object? sender, EventArgs e)
         {
             await Shell.Current.GoToAsync(nameof(ClienteFormPage));
         }
 
-        private async void Editar_Clicked(object sender, EventArgs e)
+        private async void Editar_Clicked(object? sender, EventArgs e)
         {
             if (sender is Button b && b.CommandParameter is int id)
             {
@@ -24,13 +24,13 @@ namespace SisVenda
             }
         }
 
-        private async void Excluir_Clicked(object sender, EventArgs e)
+        private async void Excluir_Clicked(object? sender, EventArgs e)
         {
             if (sender is Button b && b.CommandParameter is int id)
             {
                 var cliente = ClienteRepository.GetById(id);
                 if (cliente is null) return;
-                var ok = await DisplayAlert("Confirmar", $"Excluir {cliente.Nome}?", "Sim", "Não");
+                var ok = await DisplayAlertAsync("Confirmar", $"Excluir {cliente.Nome}?", "Sim", "Não");
                 if (!ok) return;
                 ClienteRepository.Remove(cliente);
             }

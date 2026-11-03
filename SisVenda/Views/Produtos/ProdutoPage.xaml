@@ -15,17 +15,21 @@
             <CollectionView x:Name="produtosCollectionView" ItemsSource="{Binding}" SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Padding="8" Margin="0,6" BorderColor="#DDD" CornerRadius="6">
-                            <Grid ColumnDefinitions="2*,1.2*,1*,2.5*,Auto,Auto" ColumnSpacing="8">
-                                <Label Grid.Column="0" Text="{Binding Nome}" FontAttributes="Bold" VerticalOptions="Center" />
-                                <Label Grid.Column="1" Text="{Binding PrecoFormatado}" VerticalOptions="Center" />
-                                <Label Grid.Column="2" Text="{Binding Quantidade}" VerticalOptions="Center" />
-                                <Label Grid.Column="3" Text="{Binding Descricao}" VerticalOptions="Center" LineBreakMode="TailTruncation" MaxLines="1" />
+                        <Border Padding="8" Margin="0,6" Stroke="#DDD">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="6" />
+                            </Border.StrokeShape>
+                            <Grid ColumnDefinitions="1.2*,2*,1.2*,1*,2.5*,Auto,Auto" ColumnSpacing="8">
+                                <Label Grid.Column="0" Text="{Binding Codigo}" VerticalOptions="Center" />
+                                <Label Grid.Column="1" Text="{Binding Nome}" FontAttributes="Bold" VerticalOptions="Center" />
+                                <Label Grid.Column="2" Text="{Binding PrecoFormatado}" VerticalOptions="Center" />
+                                <Label Grid.Column="3" Text="{Binding Quantidade}" VerticalOptions="Center" />
+                                <Label Grid.Column="4" Text="{Binding Descricao}" VerticalOptions="Center" LineBreakMode="TailTruncation" MaxLines="1" />
 
-                                <Button Grid.Column="4" Text="Editar" Clicked="Editar_Clicked" CommandParameter="{Binding Id}" Margin="4,0" WidthRequest="80" />
-                                <Button Grid.Column="5" Text="Excluir" BackgroundColor="#FF6666" Clicked="Excluir_Clicked" CommandParameter="{Binding Id}" Margin="4,0" WidthRequest="80" />
+                                <Button Grid.Column="5" Text="Editar" Clicked="Editar_Clicked" CommandParameter="{Binding Id}" Margin="4,0" WidthRequest="80" />
+                                <Button Grid.Column="6" Text="Excluir" BackgroundColor="#FF6666" Clicked="Excluir_Clicked" CommandParameter="{Binding Id}" Margin="4,0" WidthRequest="80" />
                             </Grid>
-                        </Frame>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

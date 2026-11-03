@@ -44,26 +44,27 @@ namespace SisVenda
             }
         }
 
-        private async void Salvar_Clicked(object sender, EventArgs e)
+        private async void Salvar_Clicked(object? sender, EventArgs e)
         {
             var nome = nomeEntry.Text?.Trim();
+            var codigo = codigoEntry.Text?.Trim();
             var descricao = descricaoEditor.Text?.Trim();
 
-            if (string.IsNullOrWhiteSpace(nome))
+            if (string.IsNullOrWhiteSpace(codigo) || string.IsNullOrWhiteSpace(nome))
             {
-                await DisplayAlert("Validação", "Nome é obrigatório.", "OK");
+                await DisplayAlertAsync("Validação", "Código e nome são obrigatórios.", "OK");
                 return;
             }
 
-            if (!TryParsePreco(precoEntry.Text, out var preco))
+            if (!TryParsePreco(precoEntry.Text, out var preco) || preco <= 0)
             {
-                await DisplayAlert("Validação", "Preço inválido.", "OK");
+                await DisplayAlertAsync("Validação", "Preço inválido.", "OK");
                 return;
             }
 
             if (!int.TryParse(quantidadeEntry.Text, out var quantidade) || quantidade < 0)
             {
-                await DisplayAlert("Validação", "Quantidade inválida.", "OK");
+                await DisplayAlertAsync("Validação", "Quantidade inválida.", "OK");
                 return;
             }
 
@@ -73,6 +74,7 @@ namespace SisVenda
                 if (p != null)
                 {
                     p.Nome = nome;
+                    p.Codigo = codigo;
                     p.Preco = preco;
                     p.Descricao = descricao;
                     p.Quantidade = quantidade;
@@ -83,6 +85,7 @@ namespace SisVenda
                 var novo = new Produto
                 {
                     Id = ProdutoRepository.Produtos.Any() ? ProdutoRepository.Produtos.Max(x => x.Id) + 1 : 1,
+                    Codigo = codigo,
                     Nome = nome,
                     Preco = preco,
                     Descricao = descricao,
@@ -94,7 +97,7 @@ namespace SisVenda
             await Shell.Current.GoToAsync("..");
         }
 
-        private async void Cancelar_Clicked(object sender, EventArgs e)
+        private async void Cancelar_Clicked(object? sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("..");
         }
@@ -111,6 +114,7 @@ namespace SisVenda
 
         void PopulateForm(Produto p)
         {
+            codigoEntry.Text = p.Codigo;
             nomeEntry.Text = p.Nome;
             precoEntry.Text = p.Preco.ToString("F2", new CultureInfo("pt-BR"));
             descricaoEditor.Text = p.Descricao;
@@ -119,6 +123,7 @@ namespace SisVenda
 
         void ClearForm()
         {
+            codigoEntry.Text = string.Empty;
             nomeEntry.Text = string.Empty;
             precoEntry.Text = string.Empty;
             descricaoEditor.Text = string.Empty;
